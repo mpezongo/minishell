@@ -19,6 +19,21 @@ t_envp *get_envp(t_envp *envp, char *str)
     return (envp);
 }
 
+int ft_strncmp2(char *s1, char *s2, int n)
+{
+    if (s1 == NULL)
+        return (1);
+	while ((*s1 != '\0' || *s2 != '\0') && n > 0)
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		s1++;
+		s2++;
+		n--;
+	}
+	return (0);        
+}
+
 void cd_cmd(t_parsing *parsing, t_envp *envp)
 {
     char cwd[1024];
@@ -28,13 +43,15 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
 	tmp = parsing->words[1];
 	if (get_envp(envp, "HOME") && ((parsing->words[1] && !ft_strncmp(parsing->words[1], "~", ft_strlen(parsing->words[1]))) || parsing->words[1] == NULL))
 		tmp = get_envp(envp, "HOME")->content;
-    else if (get_envp(envp, "OLDPWD") && !ft_strncmp(parsing->words[1], "-", ft_strlen(parsing->words[1])))
+    else if (get_envp(envp, "OLDPWD") && !ft_strncmp2(parsing->words[1], "-", ft_strlen(parsing->words[1])))
     {
         tmp = get_envp(envp, "OLDPWD")->content;
         ft_putstr_fd(tmp, parsing->out_file);
         ft_putstr_fd("\n", parsing->out_file);
     }
-	if (chdir(tmp) == -1)
+    if (!get_envp(envp, "HOME") && !parsing->words[1])
+        ft_putstr_fd("minishell: cd: HOME not set\n", parsing->out_file);
+	else if (chdir(tmp) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(tmp, 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:03 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 18:39:30 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:53:49 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     char *readln;
     char *str;
 
+    file = 0;
     name = get_name_heredoc();
     file = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
     if (file < 0)
@@ -66,7 +67,7 @@ int open_heredoc(char *readln, int *file, char *str, t_envp **envp)
     char *expand;
 
     index = 0;
-    signal(SIGINT, handle_signal);
+    signal(SIGINT, sigint_handler);
     readln = readline("> ");
     if (!isatty(STDIN_FILENO))
     {

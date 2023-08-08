@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:37 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 16:53:45 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:20:30 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ char **get_parc(int *in_file, int *out_file, t_lexer **lexer, t_envp **envp)
 {
     char **tmp;
     int i;
-    
+
     i = 0;
+    *in_file = 0;
+    *out_file = 1;
     tmp = malloc((count_words(*lexer) + 2) * sizeof(char *));
     while (*lexer && (*lexer)->category != PIPE)
     {
@@ -74,8 +76,6 @@ int parsing(t_lexer **lexer, t_parsing **parsing, t_envp **envp)
     node = *lexer;
     while (node != NULL)
     {
-        out_file = 1;
-        in_file = 0;
         tmp = get_parc(&in_file, &out_file, &node, envp);
         ft_lst_add_back_parser(parsing, ft_lst_new_parser(in_file, out_file, tmp));
         if (node)

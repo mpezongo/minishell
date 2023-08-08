@@ -232,18 +232,22 @@ int	ft_lst_size_env(t_envp *lst)
 
 void check_dup(t_parsing *parsing, t_envp *envp, char **path, char *str)
 {
-    if (parsing->out_file < 0 || parsing->in_file < 0)
-        exit(1);
+    // char *pp;
     if (!parsing->words)
         exit(0);
+    if (parsing->out_file < 0 || parsing->in_file < 0)
+        exit(1);
     signal(SIGQUIT, SIG_DFL);
-    if (parsing->in_file != 0)
-        dup2(parsing->in_file, 0);
     if (parsing->out_file != 1)
         dup2(parsing->out_file, 1);
+    if (parsing->in_file != 0)
+        dup2(parsing->in_file, 0);
     path = ft_get_path(envp);
     if (!ft_strchr(parsing->words[0], '/') && !path)
         exec_error(parsing->words[0]);
+    // printf("%d\n", parsing->in_file);
+    // read(parsing->in_file, &pp, 10);
+    // printf("%s\n", pp);
     run_cmd(parsing, envp, path, str);
 }
 
@@ -251,7 +255,7 @@ void ft_execute(t_parsing *parsing, t_envp *envp)
 {
     char **path;
     char *str;
-    int id;
+    pid_t id;
     int ret;
 
     str = parsing->words[0];

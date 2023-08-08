@@ -127,7 +127,7 @@ void execute_multiple_commands(t_parsing *parsing, t_envp *envp, int *file)
             return (ft_putstr_fd("PIPE\n", 2), exit(1));
         pid = fork();
         if (pid == -1)
-            return (ft_putstr_fd("minishell: fork: Resource temporarily unavailable\n", 2));
+            return (ft_putstr_fd("minishell: fork: Probleme in fork\n", 2));
         global.heredoc = 1;
 		if (!pid)
 			exec_cmd(parsing, envp, file, pid_old);

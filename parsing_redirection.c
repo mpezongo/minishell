@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:30 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 16:21:28 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:40:44 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int treate_redirection_out(char *str, int check)
     if (check == 1)
         file = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
     if (file < 0)
-        perror("open");
+        return (perror("open"), file);
     return (file);
 }
 
@@ -34,6 +34,6 @@ int treate_redirection_in(char *str)
 
     file = open(str, O_RDONLY, 0644);
     if (file == -1)
-        perror(str);
+        return (perror(str), file);
     return (file);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:13 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 18:13:28 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:16:49 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,6 @@ void start_treatment(char *line, t_parsing **parsings, t_envp **envp)
                 gather_words(lexer);
                 parsing(&lexer, parsings, envp);
                 execute(*envp, *parsings);
-                // int i = 0;
-                // while (*parsings)
-                // {
-                //     i = 0;
-                //     printf("out : %d | in : %d\n", (*parsings)->out_file, (*parsings)->in_file);
-                //     while ((*parsings)->words && (*parsings)->words[i])
-                //         printf("str : %s\n", (*parsings)->words[i++]);
-                //     (*parsings)= (*parsings)->next;
-                // }
             }
             else
                 update_envp_var(envp, 1);
@@ -97,6 +88,7 @@ void start_treatment(char *line, t_parsing **parsings, t_envp **envp)
         add_history(line);
 }
 
+
 void start_shell(t_envp **envp, t_parsing **parsings)
 {
     char *line;
@@ -111,20 +103,6 @@ void start_shell(t_envp **envp, t_parsing **parsings)
         }
         if (line[0])
             start_treatment(line, parsings, envp);
-        // int i = 0;
-        // while (*parsings)
-        // {
-        //     printf("Parsing %d\n", i);
-        //     int j = 0;
-        //     while ((*parsings)->words && (*parsings)->words[j])
-        //     {
-        //         printf("%s \n", (*parsings)->words[j]);
-        //         j++;
-        //     }
-        //     printf("in_file = %d | out_file = %d\n", (*parsings)->in_file, (*parsings)->out_file);
-        //     (*parsings) = (*parsings)->next;
-        //     i++;
-        // }
         free(line);
     }
 }

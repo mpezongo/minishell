@@ -67,8 +67,7 @@ void	unset_cmd(char **str, t_envp **envp)
 	while (str && str[i])
 	{
 		head0 = *envp;
-		if (check(str[i], *envp) || !check_existed(*envp, str[i])
-				|| (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
+		if (check(str[i], *envp) || check_existed(*envp, str[i]) || (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
 		{
 			if (check(str[i], *envp)
 				|| (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))

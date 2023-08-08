@@ -1,6 +1,5 @@
 #include "./../minishell.h"
 
-
 int full_of_n(char *str)
 {
     int i;

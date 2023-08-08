@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:32:59 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/06 21:42:08 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:50:05 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (s == NULL)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);
