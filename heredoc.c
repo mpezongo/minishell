@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:03 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/09 18:16:03 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:34:04 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ int open_heredoc(char *readln, int *file, char *str, t_envp **envp)
         dup2(STDIN_FILENO, open(ttyname(1), O_RDONLY, 0644));
         return (1);
     }
-    if ((readln == NULL || !ft_strncmp(readln, str, ft_strlen(readln))))
+    if ((readln == NULL || (!ft_strncmp(readln, str, ft_strlen(readln))
+        && ft_strlen(readln) == ft_strlen(str))))
     {
         free(readln);
         return (1);
