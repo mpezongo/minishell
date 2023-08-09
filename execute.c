@@ -125,8 +125,10 @@ void run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str)
     if (!str)
         return (exec_error(parsing->words[0]));
     tmp = fill_table(envp);
+
     if (execve(str, parsing->words, tmp) == -1)
-        return (perror("execve"), exit(126));
+        return (ft_putstr_fd("minishell: command not found\n", 2), exit(126));
+    printf("hello\n");
     exit(1);
 }
 
