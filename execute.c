@@ -104,6 +104,13 @@ char	**fill_table(t_envp	*env)
 	return (tmp);
 }
 
+void error_exec(char *str)
+{
+    ft_putstr_fd("minishell: ", 2);
+    ft_putstr_fd(str, 2);
+    ft_putstr_fd(": command not found\n", 2);
+}
+
 void run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str)
 {
     int i;
@@ -127,7 +134,7 @@ void run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str)
     tmp = fill_table(envp);
 
     if (execve(str, parsing->words, tmp) == -1)
-        return (ft_putstr_fd("minishell: command not found\n", 2), exit(126));
+        return (error_exec(parsing->words[0]), exit(126));
     printf("hello\n");
     exit(1);
 }
