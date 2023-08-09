@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:03 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 20:53:49 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:16:03 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     char *name;
     char *readln;
     char *str;
+    t_lexer *new;
+    t_lexer *middle;
 
     file = 0;
     name = get_name_heredoc();
@@ -27,6 +29,32 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     global.heredoc = 1;
     readln = NULL;
     str = ft_strdup(lexer->str);
+    if (lexer->next)
+    {
+        if (!ft_strncmp(lexer->next->str, "cat", ft_strlen(lexer->next->str)))
+        {
+            new = ft_lexernew(ft_strdup(name), WORD);
+            middle = lexer->next->next;
+            lexer->next->next = new;
+            new->next = middle;
+            new->prev = lexer->next->next;
+            if (middle)
+                middle->prev = new;
+        }
+    }
+    if (lexer->prev->prev)
+    {
+        if (!ft_strncmp(lexer->prev->prev->str, "cat", ft_strlen(lexer->prev->prev->str)))
+        {
+            new = ft_lexernew(ft_strdup(name), WORD);
+            middle = lexer->next;
+            lexer->next = new;
+            new->next = middle;
+            new->prev = lexer->next;
+            if (middle)
+                middle->prev = new;
+        }
+    }
     while (1)
     {
         if (open_heredoc(readln, &file, str, envp))

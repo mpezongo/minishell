@@ -92,7 +92,7 @@ void run_multiple_cmds(t_parsing *parsing, t_envp *envp)
         pwd_cmd(parsing, envp);
     else if (!ft_strncmp(parsing->words[0], "cd", ft_strlen(parsing->words[0])))
         cd_cmd(parsing, envp);
-    else if (!ft_strncmp(parsing->words[0], "echo", ft_strlen(parsing->words[0])) && parsing->words[1])
+    else if (!ft_strncmp(parsing->words[0], "echo", ft_strlen(parsing->words[0])))
         echo_cmd(parsing, envp);
     else if (!ft_strncmp(parsing->words[0], "export", ft_strlen(parsing->words[0])) && parsing->words[1])
         export_cmd(parsing->words, envp);

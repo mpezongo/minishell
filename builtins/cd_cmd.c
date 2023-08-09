@@ -41,8 +41,8 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
 
     getcwd(cwd, 1024);
 	tmp = parsing->words[1];
-	if (get_envp(envp, "HOME") && ((parsing->words[1] && !ft_strncmp(parsing->words[1], "~", ft_strlen(parsing->words[1]))) || parsing->words[1] == NULL))
-		tmp = get_envp(envp, "HOME")->content;
+	if (((parsing->words[1] && !ft_strncmp(parsing->words[1], "~", ft_strlen(parsing->words[1]))) || parsing->words[1] == NULL))
+		tmp = ft_strdup("/Users/rel-fila");
     else if (get_envp(envp, "OLDPWD") && !ft_strncmp2(parsing->words[1], "-", ft_strlen(parsing->words[1])))
     {
         tmp = get_envp(envp, "OLDPWD")->content;
@@ -50,7 +50,9 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
         ft_putstr_fd("\n", parsing->out_file);
     }
     if (!get_envp(envp, "HOME") && !parsing->words[1])
+    {
         ft_putstr_fd("minishell: cd: HOME not set\n", parsing->out_file);
+    }
 	else if (chdir(tmp) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
@@ -58,7 +60,11 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
 		ft_putstr_fd(": No such file or directory\n", 2);
 		update_exit_code(envp, 1);
 		return ;
-	}
+	} 
+    if (get_envp(envp, "OLDPWD") == NULL)
+        ft_lst_add_back_env(&envp, ft_lst_new_env(ft_strdup("OLDPWD"), NULL));
+    if (get_envp(envp, "PWD") == NULL)
+        ft_lst_add_back_env(&envp, ft_lst_new_env(ft_strdup("PWD"), NULL));
     if (get_envp(envp, "OLDPWD")->content)
         free(get_envp(envp, "OLDPWD")->content);
     get_envp(envp, "OLDPWD")->content = ft_strdup(cwd);

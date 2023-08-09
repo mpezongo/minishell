@@ -4,7 +4,7 @@ void unset_error(char *str, t_envp *envp)
 {
     ft_putstr_fd("minishell: unset: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
     update_exit_code(envp, 1);
 }
 
@@ -69,12 +69,13 @@ void	unset_cmd(char **str, t_envp **envp)
 		head0 = *envp;
 		if (check(str[i], *envp) || check_existed(*envp, str[i]) || (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
 		{
-			if (check(str[i], *envp)
-				|| (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
+			if (check(str[i], *envp) || (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
 				unset_error(str[i], *envp);
 			i++;
 			continue ;
 		}
+		if (ft_strchr(str[i], '='))
+				unset_error(str[i], *envp);
 		head = get_envp(*envp, str[i]);
 		unset_helper(head, head0, envp);
 		i++;

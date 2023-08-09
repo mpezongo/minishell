@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:10 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/06 17:53:13 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:16:29 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_lexer	*ft_lexernew(char *str, int token)
 	new_element->category = token;
 	new_element->banner = 0;
     new_element->next = NULL;
+    new_element->prev = NULL;
 	return (new_element);
 }
 
@@ -39,6 +40,7 @@ void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
     tmp->next = new;
+	new->prev = tmp;
 }
 
 int	is_whitespace(char c)

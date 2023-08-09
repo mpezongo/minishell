@@ -52,6 +52,7 @@ typedef struct s_lexer
     int banner;
     int category;
     struct s_lexer *next;
+    struct s_lexer *prev;
 }   t_lexer;
 
 void save_env(t_envp **envp, char **env);

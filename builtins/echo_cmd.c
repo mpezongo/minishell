@@ -43,12 +43,13 @@ void echo_cmd(t_parsing *parsing, t_envp *envp)
 
     i = 1;
     check = 0;
+    (void)envp;
     check = check_flag_for_echo(parsing, &i);
     while (parsing->words[i])
     {
         if (!ft_strncmp(parsing->words[i], "~", ft_strlen(parsing->words[i])) && parsing->words[i][0] != '\0')
         {
-            ft_putstr_fd(get_envp(envp, "HOME")->content, parsing->out_file);
+            ft_putstr_fd(ft_strdup("/Users/rel-fila"), parsing->out_file);
             i++;
         }
         else

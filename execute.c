@@ -110,7 +110,7 @@ void run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str)
     char **tmp;
 
     i = 0;
-    while (path[i])
+    while (path && path[i])
     {
         if (!ft_strchr(parsing->words[0], '/'))
             str = ft_strjoin_add_bs(path[i], parsing->words[0]);
@@ -232,7 +232,6 @@ int	ft_lst_size_env(t_envp *lst)
 
 void check_dup(t_parsing *parsing, t_envp *envp, char **path, char *str)
 {
-    // char *pp;
     if (!parsing->words)
         exit(0);
     if (parsing->out_file < 0 || parsing->in_file < 0)
@@ -245,9 +244,6 @@ void check_dup(t_parsing *parsing, t_envp *envp, char **path, char *str)
     path = ft_get_path(envp);
     if (!ft_strchr(parsing->words[0], '/') && !path)
         exec_error(parsing->words[0]);
-    // printf("%d\n", parsing->in_file);
-    // read(parsing->in_file, &pp, 10);
-    // printf("%s\n", pp);
     run_cmd(parsing, envp, path, str);
 }
 
@@ -280,7 +276,7 @@ void execute_one_command(t_parsing *parsing, t_envp *envp)
         pwd_cmd(parsing, envp);
     else if (!ft_strncmp(parsing->words[0], "cd", ft_strlen(parsing->words[0])))
         cd_cmd(parsing, envp);
-    else if (!ft_strncmp(parsing->words[0], "echo", ft_strlen(parsing->words[0])) && parsing->words[1])
+    else if (!ft_strncmp(parsing->words[0], "echo", ft_strlen(parsing->words[0])))
         echo_cmd(parsing, envp);
     else if (!ft_strncmp(parsing->words[0], "export", ft_strlen(parsing->words[0])) && parsing->words[1])
         export_cmd(parsing->words, envp);
