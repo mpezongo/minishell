@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:03 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/09 20:23:49 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:05:51 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     readln = NULL;
     str = ft_strdup(lexer->str);
     node = lexer->next;
-    while (node && (node->next && node->next->category != WORD))
+    while (node)
     {
         if (!ft_strncmp(node->str, "cat", ft_strlen(node->str)))
         {
@@ -50,6 +50,20 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
             if (middle)
                 middle->prev = new;
         }
+        if (!ft_strncmp(node->str, "grep", ft_strlen(node->str)))
+        {
+            if (!node->next)
+            {
+                node = node->next;
+                continue ;
+            }
+            new = ft_lexernew(ft_strdup(name), WORD);
+            middle = node->next->next;
+            node->next->next = new;
+            new->next = middle;
+            if (middle)
+                middle->prev = new;
+        }
         node = node->next;
     }
     if (!lexer->next || (lexer->next && lexer->next->category == PIPE))
@@ -59,7 +73,8 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
         {
             if (node->prev)
             {
-                if (!ft_strncmp(node->prev->str, "cat", ft_strlen(node->prev->str)))
+                if (!ft_strncmp(node->prev->str, "cat", ft_strlen(node->prev->str))
+                    || (!ft_strncmp(node->prev->str, "grep", ft_strlen(node->prev->str)) && node->category == WORD))
                 {
                     new = ft_lexernew(ft_strdup(name), WORD);
                     middle = lexer->next;
