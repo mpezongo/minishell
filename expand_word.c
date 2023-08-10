@@ -113,7 +113,7 @@ char *expand_insin_quote(char *str, int *i)
     (*i)++;
     while (str[*i + j] && str[*i + j] != '\'')
         j++;
-    tmp = (char *)malloc(sizeof(char) * (j + 1));
+    tmp = (char *)malloc(sizeof(char) * (j + 2));
     if (!tmp)
         return (NULL);
     j = 1;

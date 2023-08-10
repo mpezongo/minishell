@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:19 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/06 20:24:33 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:44:24 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,13 @@ void ft_lst_add_back_env(t_envp **lst, t_envp *new)
 {
     t_envp *list;
 
-    if (lst != NULL)
-	{
-		if (*lst == NULL)
-			*lst = new;
-		else
-		{
-			list = ft_lstlast(*(lst));
-			list->next = new;
-		}
-	}
+    if (*lst == NULL)
+        *lst = new;
+    else
+    {
+        list = ft_lstlast(*(lst));
+        list->next = new;
+    }
 }
 
 void	ft_lst_add_front_env(t_envp **lst, t_envp *new)
@@ -52,16 +49,15 @@ void	ft_lst_add_front_env(t_envp **lst, t_envp *new)
 
 t_envp *ft_lstlast(t_envp *lst)
 {
-    t_envp	*list;
-
 	if (lst == NULL)
 		return (NULL);
 	while (lst)
 	{
-		list = lst;
+        if (lst ->next == NULL)
+			return (lst);
 		lst = lst->next;
 	}
-	return (list);
+	return (lst);
 }
 
 char **treate_empty_env(void)
