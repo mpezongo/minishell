@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:21 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/06 20:24:37 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:03:42 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void ft_check_env(t_envp **envp, int check, char **env)
             node = node->next;
         }
         free_arg(env);
+    }
+    while (node)
+    {
+        if (!ft_strncmp(node->name, "OLDPWD", ft_strlen(node->name)))
+            node->sign = 1;
+        node = node->next;
     }
     ft_lst_add_front_env(envp, ft_lst_new_env(ft_strdup("?"), ft_strdup("0")));
     if (get_var(envp, "OLDPWD") == NULL)

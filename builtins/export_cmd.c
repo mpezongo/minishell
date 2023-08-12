@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 17:28:12 by rel-fila          #+#    #+#             */
+/*   Updated: 2023/08/10 17:28:13 by rel-fila         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../minishell.h"
 
 int	check_alphabet(int a)
@@ -67,31 +79,12 @@ void export_error(char *str)
 
 int	check_existed(t_envp *envp, char *name)
 {
-// 	int	i;
-
-// 	i = 0;
-// 	if (ft_strchr(name, '+'))
-// 	{
-// 		i = ft_strlen(name);
-// 		while (envp)
-// 		{
-// 			if (!ft_strncmp(envp->name, name, ft_strlen(name)))
-// 			{
-// 				printf("key = %s\n", envp->name);
-// 				return (0);
-// 			}
-// 			envp = envp->next;
-// 		}
-// 	}
-// 	else
-// 	{
 		while (envp)
 		{
 			if (!ft_strncmp(envp->name, name, ft_strlen(envp->name)))
 				return (0);
 			envp = envp->next;
 		}
-	// }
 	return (1);
 }
 

@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 17:28:16 by rel-fila          #+#    #+#             */
+/*   Updated: 2023/08/10 17:32:30 by rel-fila         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../minishell.h"
 
-void unset_error(char *str, t_envp *envp)
+void	unset_error(char *str, t_envp *envp)
 {
-    ft_putstr_fd("minishell: unset: ", 2);
+	ft_putstr_fd("minishell: unset: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);
-    update_exit_code(envp, 1);
+	update_exit_code(envp, 1);
 }
 
 void	unset_clear_node(t_envp **h)
@@ -40,9 +52,9 @@ void	unset_helper(t_envp *head, t_envp *head0, t_envp **env)
 	}
 }
 
-int check_equal(char *str)
+int	check_equal(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("%s\n", str);
@@ -67,15 +79,17 @@ void	unset_cmd(char **str, t_envp **envp)
 	while (str && str[i])
 	{
 		head0 = *envp;
-		if (check(str[i], *envp) || check_existed(*envp, str[i]) || (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
+		if (check(str[i], *envp) || check_existed(*envp, str[i]) || \
+				(ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
 		{
-			if (check(str[i], *envp) || (ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
+			if (check(str[i], *envp) || (ft_strchr(str[i], '=') && \
+						ft_strlen(str[i]) == 1))
 				unset_error(str[i], *envp);
 			i++;
 			continue ;
 		}
 		if (ft_strchr(str[i], '='))
-				unset_error(str[i], *envp);
+			unset_error(str[i], *envp);
 		head = get_envp(*envp, str[i]);
 		unset_helper(head, head0, envp);
 		i++;

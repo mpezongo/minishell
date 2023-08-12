@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:13 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/09 19:58:44 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/12 12:06:56 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,6 @@ void start_treatment(char *line, t_parsing **parsings, t_envp **envp)
                 gather_words(lexer);
                 parsing(&lexer, parsings, envp);
                 execute(*envp, *parsings);
-                // int i = 0;
-                // while (*parsings)
-                // {
-                //     i = 0;
-                //     printf("out : %d | in : %d\n", (*parsings)->out_file, (*parsings)->in_file);
-                //     while ((*parsings)->words && (*parsings)->words[i])
-                //         printf("str : %s\n", (*parsings)->words[i++]);
-                //     (*parsings)= (*parsings)->next;
-                // }
             }
             else
                 update_envp_var(envp, 1);
@@ -110,6 +101,7 @@ void start_shell(t_envp **envp, t_parsing **parsings)
             printf("%s\n", EXIT_MSG);
             exit(0);
         }
+        update_exit_code(*envp, global.exit_code);
         if (line[0])
             start_treatment(line, parsings, envp);
         free(line);

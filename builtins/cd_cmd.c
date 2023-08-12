@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_cmd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 17:27:44 by rel-fila          #+#    #+#             */
+/*   Updated: 2023/08/12 11:08:24 by rel-fila         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../minishell.h"
 
 t_envp *get_envp(t_envp *envp, char *str)
@@ -60,11 +72,17 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
 		ft_putstr_fd(": No such file or directory\n", 2);
 		update_exit_code(envp, 1);
 		return ;
-	} 
+	}
     if (get_envp(envp, "OLDPWD") == NULL)
+    {
         ft_lst_add_back_env(&envp, ft_lst_new_env(ft_strdup("OLDPWD"), NULL));
+        get_envp(envp, "OLDPWD")->sign = 1;
+    }
     if (get_envp(envp, "PWD") == NULL)
+    {
         ft_lst_add_back_env(&envp, ft_lst_new_env(ft_strdup("PWD"), NULL));
+        get_envp(envp, "PWD")->sign = 1;
+    }
     if (get_envp(envp, "OLDPWD")->content)
         free(get_envp(envp, "OLDPWD")->content);
     get_envp(envp, "OLDPWD")->content = ft_strdup(cwd);

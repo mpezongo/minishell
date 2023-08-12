@@ -132,10 +132,8 @@ void run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str)
     if (!str)
         return (exec_error(parsing->words[0]));
     tmp = fill_table(envp);
-
     if (execve(str, parsing->words, tmp) == -1)
         return (error_exec(parsing->words[0]), exit(126));
-    printf("hello\n");
     exit(1);
 }
 
