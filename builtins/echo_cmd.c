@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:27:49 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/10 17:36:48 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:12:32 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	echo_cmd(t_parsing *parsing, t_envp *envp)
 	while (parsing->words[i])
 	{
 		if (!ft_strncmp(parsing->words[i], "~", ft_strlen(parsing->words[i])) \
-				&& parsing->words[i][0] != '\0')
+				&& parsing->words[i][0] != '\0' && get_envp(envp, "HOME"))
 		{
-			ft_putstr_fd(ft_strdup("/Users/rel-fila"), parsing->out_file);
+			ft_putstr_fd(get_envp(envp, "HOME")->content, parsing->out_file);
 			i++;
 		}
 		else

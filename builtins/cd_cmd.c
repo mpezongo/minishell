@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:27:44 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/12 11:08:24 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:10:51 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void cd_cmd(t_parsing *parsing, t_envp *envp)
 
     getcwd(cwd, 1024);
 	tmp = parsing->words[1];
-	if (((parsing->words[1] && !ft_strncmp(parsing->words[1], "~", ft_strlen(parsing->words[1]))) || parsing->words[1] == NULL))
-		tmp = ft_strdup("/Users/rel-fila");
+	if (((parsing->words[1] && !ft_strncmp(parsing->words[1], "~", ft_strlen(parsing->words[1]))) && get_envp(envp, "HOME")))
+		tmp = get_envp(envp, "HOME")->content;
     else if (get_envp(envp, "OLDPWD") && !ft_strncmp2(parsing->words[1], "-", ft_strlen(parsing->words[1])))
     {
         tmp = get_envp(envp, "OLDPWD")->content;
