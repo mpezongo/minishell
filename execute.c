@@ -267,6 +267,7 @@ void ft_execute(t_parsing *parsing, t_envp *envp)
     id = fork();
     if (id == 0)
         check_dup(parsing, envp, path, str);
+    printf("ls\n");
     global.heredoc = 0;
     waitpid(id, &ret, 0);
     close(parsing->in_file);
