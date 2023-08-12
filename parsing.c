@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:37 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/08 21:20:30 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/12 16:45:21 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,37 @@
 
 int parser_2(t_lexer **lexer, int *in_file, int *out_file, t_envp **envp)
 {
-    if ((*lexer)->category == ROUT)
-        *out_file = treate_redirection_out((*lexer)->next->str, 1);
-    else if ((*lexer)->category == RIN)
+    if ((*lexer)->category == RIN)
         *in_file = treate_redirection_in((*lexer)->next->str);
-    else if ((*lexer)->category == HEREDOCUMENT)
-        *in_file = get_heredocument_in((*lexer)->next, envp);
+    else if ((*lexer)->category == ROUT)
+        *out_file = treate_redirection_out((*lexer)->next->str, 1);
     else if ((*lexer)->category == APPEND)
         *out_file = treate_redirection_out((*lexer)->next->str, 2);
+    else if ((*lexer)->category == HEREDOCUMENT)
+        *in_file = get_heredocument_in((*lexer)->next, envp);
     else
         return (0);
     (*lexer) = (*lexer)->next;
     return (0);
+}
+
+void	ft_parc_norm1(t_lexer **ptr, int i)
+{
+	if (i == 0)
+	{
+		while ((*ptr) && (*ptr)->category != PIPE)
+		{
+			free((*ptr)->str);
+			free((*ptr));
+			(*ptr) = (*ptr)->next;
+		}
+	}
+	if (i == 1)
+	{
+		free((*ptr)->str);
+		free((*ptr));
+		(*ptr) = (*ptr)->next;
+	}
 }
 
 char **get_parc(int *in_file, int *out_file, t_lexer **lexer, t_envp **envp)

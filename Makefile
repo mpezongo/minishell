@@ -8,11 +8,14 @@ SRC = builtins/cd_cmd.c builtins/echo_cmd.c builtins/env_cmd.c builtins/exit_cmd
 	lexer_list_checker.c lexer_utils.c lexer.c main.c parsing_redirection.c parsing_utils.c parsing.c remove_quot.c signal.c start_shell.c tokenization.c \
 	treate_env_utils.c treate_env.c treate.c utils.c \
 
-LDFLAGS= -L/goinfre/rel-fila/homebrew/opt/readline/lib
+USER := $(shell id -un)
 
-CPPFLAGS= -I/goinfre/rel-fila/homebrew/opt/readline/include
+LDFLAGS= -L/goinfre/${USER}/homebrew/opt/readline/lib
+
+CPPFLAGS= -I/goinfre/${USER}/homebrew/opt/readline/include
 
 LIBS = -lreadline
+
 
 OBJ = ${SRC:.c=.o}
 

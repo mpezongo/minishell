@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:53:03 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/12 12:43:05 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:51:13 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     char *name;
     char *readln;
     char *str;
-    t_lexer *new;
-    t_lexer *middle;
-    t_lexer *node;
 
     file = 0;
     name = get_name_heredoc();
@@ -30,64 +27,6 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     global.heredoc = 1;
     readln = NULL;
     str = ft_strdup(lexer->str);
-    node = lexer->next;
-    while (node)
-    {
-        if (!ft_strncmp(node->str, "cat", ft_strlen(node->str)))
-        {
-            if (node->next)
-            {
-                if (node->next->category == WORD)
-                {
-                    node = node->next;
-                    continue ;
-                }
-            }
-            new = ft_lexernew(ft_strdup(name), WORD);
-            middle = node->next;
-            node->next = new;
-            new->next = middle;
-            if (middle)
-                middle->prev = new;
-        }
-        if (!ft_strncmp(node->str, "grep", ft_strlen(node->str)))
-        {
-            if (!node->next)
-            {
-                node = node->next;
-                continue ;
-            }
-            new = ft_lexernew(ft_strdup(name), WORD);
-            middle = node->next->next;
-            node->next->next = new;
-            new->next = middle;
-            if (middle)
-                middle->prev = new;
-        }
-        node = node->next;
-    }
-    if (!lexer->next || (lexer->next && lexer->next->category == PIPE))
-    {
-        node = lexer->prev;
-        while (node)
-        {
-            if (node->prev)
-            {
-                if (!ft_strncmp(node->prev->str, "cat", ft_strlen(node->prev->str))
-                    || (!ft_strncmp(node->prev->str, "grep", ft_strlen(node->prev->str)) && node->category == WORD))
-                {
-                    new = ft_lexernew(ft_strdup(name), WORD);
-                    middle = lexer->next;
-                    lexer->next = new;
-                    new->next = middle;
-                    if (middle)
-                        middle->prev = new;
-                    break ;
-                }
-            }
-            node = node->prev;
-        }
-    }
     while (1)
     {
         if (open_heredoc(readln, &file, str, envp))
@@ -95,7 +34,7 @@ int get_heredocument_in(t_lexer *lexer, t_envp **envp)
     }
     close(file);
     free(str);
-    if (file == -1)
+    if (file != -1)
         file = open(name, O_RDONLY);
     global.heredoc = 0;
     free(name);
@@ -106,7 +45,7 @@ char *get_name_heredoc(void)
 {
     static int i;
     char *tmp;
-    char *tmp1;
+    static char *tmp1;
 
     i = 0;
     while (1)

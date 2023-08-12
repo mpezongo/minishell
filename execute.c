@@ -269,6 +269,7 @@ void ft_execute(t_parsing *parsing, t_envp *envp)
         check_dup(parsing, envp, path, str);
     global.heredoc = 0;
     waitpid(id, &ret, 0);
+    close(parsing->in_file);
     get_exit_of_process(ret, envp);
 }
 
