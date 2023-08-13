@@ -154,5 +154,21 @@ int open_heredoc(char *readln, int *file, char *str, t_envp **envp);
 void	ft_lst_add_front_env(t_envp **lst, t_envp *new);
 int	check_alphabet(int a);
 void	sigint_handler(int sig);
+t_envp	*envp_copy(t_envp *env);
+int	check_sorted(t_envp *exp);
+void	ft_lst_clear_envp(t_envp *envp);
+void	print_envp(t_envp *envp, t_parsing *parsing);
+void	free_name_content(char *name, char *content);
+void	run_cmd(t_parsing *parsing, t_envp *envp, char **path, char *str);
+int	chek_word(char const *a, char c);
+char	**ft_chek(char const *s, char c, char **strings, int words_count);
+char	**ft_split1(char const *s, char c);
+char	**ft_get_path(t_envp *env);
+void	close_all_fd(t_parsing *parsing, int *fd, int old);
+void	duplicate(t_parsing *parc, int *fd, int old);
+int	ft_execute_m_cmd(int *i, char **str, t_parsing	*parcer, char **path1);
+
+
+
 
 #endif

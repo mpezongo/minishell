@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:32:46 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/08 14:20:52 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/13 15:14:00 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	ft_count_word(char const *s, char c)
 {
-	int i;
-	int word;
+	int	i;
+	int	word;
 
 	i = 0;
 	word = 0;
@@ -53,7 +53,7 @@ static void	ft_free(char **strs, int j)
 	free(strs);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		word;
@@ -64,18 +64,17 @@ char		**ft_split(char const *s, char c)
 	i = 0;
 	j = -1;
 	word = ft_count_word(s, c);
-	if (!(strs = (char **)malloc((word + 1) * sizeof(char *))))
+	strs = (char **)malloc((word + 1) * sizeof(char *));
+	if (!strs)
 		return (NULL);
 	while (++j < word)
 	{
 		while (s[i] == c)
 			i++;
 		size = ft_size_word(s, c, i);
-		if (!(strs[j] = ft_substr(s, i, size)))
-		{
-			ft_free(strs, j);
-			return (NULL);
-		}
+		strs[j] = ft_substr(s, i, size);
+		if (!strs[j])
+			return (ft_free(strs, j), NULL);
 		i += size;
 	}
 	strs[j] = 0;
