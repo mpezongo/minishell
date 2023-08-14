@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_word.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/13 15:13:38 by mpezongo          #+#    #+#             */
+/*   Updated: 2023/08/14 10:22:03 by mpezongo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_variable_naming(char *value, int *a, char **tmp, int pos)
 {
 	if (value[*a] == '?')
 		return (*tmp = ft_substr(value, pos, 1), (*a)++, 0);
-	else if ((value[*a] >= 'A' && value[*a] <= 'Z') || (value[*a] >= 'a' && value[*a] <= 'z') || value[*a] == '_')
+	else if ((value[*a] >= 'A' && value[*a] <= 'Z') || (value[*a] >= 'a'
+			&& value[*a] <= 'z') || value[*a] == '_')
 	{
 		while (value[*a] && ((value[*a] >= '0' && value[*a] <= '9')
 				|| (value[*a] >= 'A' && value[*a] <= 'Z')
 				|| (value[*a] >= 'a' && value[*a] <= 'z')
 				|| value[*a] == '_'))
-		{
 			(*a)++;
-		}
 		*tmp = ft_substr(value, pos, *a - pos);
 	}
 	else
@@ -20,21 +31,21 @@ int	check_variable_naming(char *value, int *a, char **tmp, int pos)
 	return (0);
 }
 
-char *expand_var(char *str, int *i, t_envp **envp)
+char	*expand_var(char *str, int *i, t_envp **envp)
 {
-    t_envp *node;
-    char *tmp;
-    char *tmp1;
-    char *tmp2;
+	t_envp	*node;
+	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 
-    (*i)++;
+	(*i)++;
     if (str[*i] == 0)
-        return (ft_strdup("$"));
-    if (check_variable_naming(str, i, &tmp, *i))
-        return (ft_strdup(""));
-    node = *envp;
-    while (node)
-    {
+		return (ft_strdup("$"));
+	if (check_variable_naming(str, i, &tmp, *i))
+		return (ft_strdup(""));
+	node = *envp;
+	while (node)
+	{
         if (tmp[1] == '$')
             return (tmp);
         if (!ft_strncmp(node->name, tmp, ft_strlen(node->name)))
@@ -44,25 +55,9 @@ char *expand_var(char *str, int *i, t_envp **envp)
                 tmp1 = ft_strdup(node->content);
                 if (str[*i] || ((str[*i] < '0' && str[*i] > '9')
                     && (str[*i] < 'A' || str[*i] > 'Z')
-                    && (str[*i] < 'a' && str[*i] > 'z')
-                    && str[*i] != '_'))
+                    && (str[*i] < 'a' && str[*i] > 'z') && str[*i] != '_'))
                 {
-                    free(tmp);
-                    while ((str[*i] && str[*i] != ' ') && (!is_operator(str[*i])))
-                    {
-                        if (str[*i] == '$')
-                            tmp = expand_var(str, i, envp);
-                        else
-                        {
-                            tmp = get_char(str[*i]);
-                            (*i)++;
-                        }
-                        tmp2 = tmp1;
-                        free(tmp1);
-                        tmp1 = ft_strjoin(tmp2, tmp);
-                        free(tmp);
-                    }
-                    return (tmp1);
+                    return (expand_var2(str, i, tmp1));
                 }
                 else if (str[*i] == '$')
                 {
@@ -203,3 +198,4 @@ void check_inside_for_money(char *str, int *i, char **tmp, t_envp **envp)
             break ;
     }
 }
+

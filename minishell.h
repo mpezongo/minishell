@@ -154,5 +154,6 @@ int open_heredoc(char *readln, int *file, char *str, t_envp **envp);
 void	ft_lst_add_front_env(t_envp **lst, t_envp *new);
 int	check_alphabet(int a);
 void	sigint_handler(int sig);
+void	treate_dollar(t_lexer *lexer, t_envp **envp, char *str, int *i);
 
 #endif

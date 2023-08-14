@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_line_utils.c                                 :+:      :+:    :+:   */
+/*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/06 17:52:29 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/12 18:15:15 by mpezongo         ###   ########.fr       */
+/*   Created: 2023/08/12 18:16:11 by mpezongo          #+#    #+#             */
+/*   Updated: 2023/08/13 15:13:13 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_pipe(char *line)
+void	treate_dollar(t_lexer *lexer, t_envp **envp, char *str, int *i)
 {
-	int	i;
+	char	*tmp;
+	char	**strs;
+	int		j;
 
-	i = -1;
-	while (line[++i])
+	tmp = expand_var(str, i, envp);
+	strs = ft_split(tmp, ' ');
+	j = 0;
+	if (strs[0])
 	{
-		if (line[i] == '|')
-			i++;
-		while (line[i] && (line[i] == 32 || (line[i] < 13 && line[i] > 9)))
-			i++;
-		if (line[i] == '|')
-			return (1);
+		while (strs && strs[j])
+		{
+			ft_lexeradd_back(&lexer, ft_lexernew(strs[j], WORD));
+			j++;
+		}
+		free(strs);
+		free(tmp);
 	}
-	return (0);
+	else
+	{
+		ft_lexeradd_back(&lexer, ft_lexernew(tmp, WORD));
+		free(strs);
+	}
+	(*i)--;
 }
