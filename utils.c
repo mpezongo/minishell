@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-int check_spaces(char *line)
+int	check_spaces(char *line)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (line[++i])
-    {
-        if (line[i] != 32 && (line[i] > 13 || line[i] < 9))
-            return (0);
-    }
-    return (i);
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] != 32 && (line[i] > 13 || line[i] < 9))
+			return (0);
+	}
+	return (i);
 }

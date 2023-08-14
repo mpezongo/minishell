@@ -6,7 +6,7 @@
 /*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:13 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/12 16:38:37 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:52:37 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,87 +23,88 @@ void	ft_lst_clear_parsing(t_parsing **lst)
 	while (t)
 	{
 		tmp = t->next;
-        if (t->words[0])
-            free_arg(t->words);
-        free(t->words);
-        free(t);
+		if (t->words[0])
+			free_arg(t->words);
+		free(t->words);
+		free(t);
 		t = tmp;
 	}
 	*lst = NULL;
 }
 
-void update_envp_var(t_envp **envp, int type)
+void	update_envp_var(t_envp **envp, int type)
 {
-    t_envp *node;
-    char *error;
+	t_envp	*node;
+	char	*error;
 
-    if (type == 1)
-        error = ft_strdup("258");
-    else if (type == 2)
-        error = ft_strdup("1");
-    node = *envp;
-    while (node)
-    {
-        if (!ft_strncmp(node->name, "?", 1))
-        {
-            free(node->content);
-            node->content = error;
-        }
-        node = node->next;
-    }
+	if (type == 1)
+		error = ft_strdup("258");
+	else if (type == 2)
+		error = ft_strdup("1");
+	node = *envp;
+	while (node)
+	{
+		if (!ft_strncmp(node->name, "?", 1))
+		{
+			free(node->content);
+			node->content = error;
+		}
+		node = node->next;
+	}
 }
 
-void start_treatment(char *line, t_parsing **parsings, t_envp **envp)
+void	start_treatment(char *line, t_parsing **parsings, t_envp **envp)
 {
-    t_lexer *lexer;
+	t_lexer	*lexer;
 
-    if (!check_spaces(line))
-    {
-        add_history(line);
-        if (!check_line(line))
-        {
-            lexer = expand(line, envp);
-            if (!check_lexer_list(lexer))
-            {
-                gather_words(lexer);
-                parsing(&lexer, parsings, envp);
-                execute(*envp, *parsings);
-            }
-            else
-                update_envp_var(envp, 1);
-            free_lexer(&lexer);
-            if (*parsings != NULL)
+	if (!check_line(line))
+	{
+		lexer = expand(line, envp);
+		if (!check_lexer_list(lexer))
+		{
+			gather_words(lexer);
+			parsing(&lexer, parsings, envp);
+			execute(*envp, *parsings);
+		}
+		else
+			update_envp_var(envp, 1);
+		free_lexer(&lexer);
+		if (*parsings != NULL)
+		{
+			ft_lst_clear_parsing(parsings);
+			*parsings = NULL;
+		}
+	}
+	else
+	{
+		update_envp_var(envp, 2);
+		printf("Quotes error\n");
+	}
+}
+
+void	start_shell(t_envp **envp, t_parsing **parsings)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline(PROMPT);
+		if (!line)
+		{
+			printf("%s\n", EXIT_MSG);
+			exit(0);
+		}
+		update_exit_code(*envp, g_global.exit_code);
+		if (line[0])
+		{
+			if (!check_spaces(line))
 			{
-				ft_lst_clear_parsing(parsings);
-				*parsings = NULL;
+				add_history(line);
+				start_treatment(line, parsings, envp);
 			}
-        }
-        else
-        {
-            update_envp_var(envp, 2);
-            printf("Quotes error\n");
-        }
-    }
-    else if (check_spaces(line))
-        add_history(line);
-}
-
-
-void start_shell(t_envp **envp, t_parsing **parsings)
-{
-    char *line;
-
-    while (1)
-    {
-        line = readline(PROMPT);
-        if (!line)
-        {
-            printf("%s\n", EXIT_MSG);
-            exit(0);
-        }
-        update_exit_code(*envp, global.exit_code);
-        if (line[0])
-            start_treatment(line, parsings, envp);
-        free(line);
-    }
+			else if (check_spaces(line))
+				add_history(line);
+		}
+		free(line);
+	}
 }

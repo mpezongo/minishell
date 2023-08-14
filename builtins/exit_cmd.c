@@ -6,11 +6,22 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:27:56 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/10 17:48:08 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/13 15:04:20 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../minishell.h"
+
+int	check_existed(t_envp *envp, char *name)
+{
+	while (envp)
+	{
+		if (!ft_strncmp(envp->name, name, ft_strlen(envp->name)))
+			return (0);
+		envp = envp->next;
+	}
+	return (1);
+}
 
 int	check_int(char *str)
 {

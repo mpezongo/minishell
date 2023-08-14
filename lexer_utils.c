@@ -22,8 +22,8 @@ t_lexer	*ft_lexernew(char *str, int token)
 	new_element->str = str;
 	new_element->category = token;
 	new_element->banner = 0;
-    new_element->next = NULL;
-    new_element->prev = NULL;
+	new_element->next = NULL;
+	new_element->prev = NULL;
 	return (new_element);
 }
 
@@ -39,7 +39,7 @@ void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-    tmp->next = new;
+	tmp->next = new;
 	new->prev = tmp;
 }
 
@@ -48,8 +48,8 @@ int	is_whitespace(char c)
 	return (c == ' ' || (c > 8 && c < 14));
 }
 
-void by_pass_whitespace(char *args, int *i)
+void	by_pass_whitespace(char *args, int *i)
 {
-    while ((args[*i] == ' ') || (args[*i] > 8 && args[*i] < 14))
-        (*i)++;
+	while ((args[*i] == ' ') || (args[*i] > 8 && args[*i] < 14))
+		(*i)++;
 }

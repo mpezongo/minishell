@@ -6,7 +6,7 @@
 /*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:52:55 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/12 18:30:18 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/14 10:46:27 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_lexer	*expand(char *line, t_envp **envp)
 	while (str[i])
 	{
 		if (str[i] == '$')
-			treate_dollar(lexer, envp, str, &i);
+			treate_dollar(&lexer, envp, str, &i);
 		else if (str[i] == '\'')
 			ft_lexeradd_back(&lexer,
 				ft_lexernew(expand_insin_quote(str, &i), WORD));

@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:16 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/10 17:32:30 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:49:26 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ void	unset_cmd(char **str, t_envp **envp)
 	while (str && str[i])
 	{
 		head0 = *envp;
-		if (check(str[i], *envp) || check_existed(*envp, str[i]) || \
+		if (ft_strchr(str[i], '='))
+			unset_error(str[i], *envp);
+		else if (check(str[i], *envp) || check_existed(*envp, str[i]) || \
 				(ft_strchr(str[i], '=') && ft_strlen(str[i]) == 1))
 		{
 			if (check(str[i], *envp) || (ft_strchr(str[i], '=') && \
@@ -88,8 +90,6 @@ void	unset_cmd(char **str, t_envp **envp)
 			i++;
 			continue ;
 		}
-		if (ft_strchr(str[i], '='))
-			unset_error(str[i], *envp);
 		head = get_envp(*envp, str[i]);
 		unset_helper(head, head0, envp);
 		i++;

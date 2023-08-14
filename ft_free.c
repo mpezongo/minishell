@@ -12,22 +12,22 @@
 
 #include "minishell.h"
 
-void free_arg(char **env)
+void	free_arg(char **env)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (env[i])
-    {
-        free(env[i]);
-        i++;
-    }
-    free(env[i]);
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env[i]);
 }
 
-void free_lexer(t_lexer **lst)
+void	free_lexer(t_lexer **lst)
 {
-    t_lexer	*list;
+	t_lexer	*list;
 
 	if (lst != NULL)
 	{
