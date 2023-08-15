@@ -6,7 +6,7 @@
 /*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:17:52 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/15 09:41:12 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/15 10:44:40 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	ft_execute(t_parsing *parsing, t_envp *envp)
 	id = fork();
 	if (id == 0)
 		check_dup(parsing, envp, path, str);
+	if (parsing->in_file > 0)
+		close(parsing->in_file);
 	g_global.heredoc = 0;
 	waitpid(id, &ret, 0);
 	get_exit_of_process(ret, envp);
