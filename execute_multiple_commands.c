@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multiple_commands.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 16:17:27 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/14 14:52:37 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/15 09:21:05 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	catch_exit(t_parsing *parsing)
 
 void	ft_execute_multiple_cmds(t_parsing *parsing, t_envp *env)
 {
-	char	**path1;
+	char	**path;
 	char	*str;
 	int		i;
 	char	**envp;
 
 	i = 0;
 	catch_exit(parsing);
-	path1 = ft_get_path(env);
-	if (!path1 && ft_strchr(parsing->words[0], '/') == 0)
+	path = ft_get_path(env);
+	if (!path && ft_strchr(parsing->words[0], '/') == 0)
 		exec_error(parsing->words[0]);
-	while (path1 && path1[i])
+	while (path && path[i])
 	{
-		if (ft_execute_m_cmd(&i, &str, parsing, path1) == 1)
+		if (ft_execute_m_cmd(&i, &str, parsing, path) == 1)
 			break ;
 	}
 	if (ft_strchr(parsing->words[0], '/') != 0)

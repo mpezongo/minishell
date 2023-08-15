@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:17:52 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/15 08:23:28 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/15 09:10:38 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute_one_command(t_parsing *parsing, t_envp *envp)
 {
 	int	len;
 
-	len = ft_strlen(parsing->words[0]);
+	len = ft_strlen(parsing->words[0]) + 1;
 	update_exit_code(envp, 0);
 	if (!envp || !parsing->words[0])
 		return ;

@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:39:51 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/14 18:25:36 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/15 08:59:50 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ void	get_exit_of_process(int ret, t_envp *envp)
 	if (WTERMSIG(ret) == 2)
 	{
 		ft_putstr_fd("\n", 1);
-		update_exit_code(envp, 130);
 		exit_code = 130;
 	}
 	else if (WTERMSIG(ret) == 3)
 	{
 		ft_putstr_fd("Quit: 3\n", 1);
-		update_exit_code(envp, 131);
 		exit_code = 131;
 	}
 	update_exit_code(envp, exit_code);
