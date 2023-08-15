@@ -6,7 +6,7 @@
 /*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 14:25:52 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/14 14:25:53 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/15 09:51:11 by mpezongo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	save_env(t_envp **envp, char **env)
 	{
 		name = get_env_name(env[i]);
 		content = get_env_content(env[i]);
-		if (!ft_strncmp(name, "SHLVL", 5))
+		if (!ft_strncmp(name, "SHLVL", ft_strlen(name)))
 			increment_shell_level(&content);
 		tmp = ft_lst_new_env(name, content);
 		ft_lst_add_back_env(envp, tmp);
