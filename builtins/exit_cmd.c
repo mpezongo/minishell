@@ -6,7 +6,7 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:27:56 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/13 15:04:20 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/15 08:32:09 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	check_int(char *str)
 
 void	exit_cmd(char **str, t_envp *envp)
 {
-	int		i;
-	long	exit_code;
+	int			i;
+	long long	exit_code;
 
 	printf("%s\n", EXIT_MSG);
 	i = 1;
@@ -52,7 +52,7 @@ void	exit_cmd(char **str, t_envp *envp)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(str[i], 2);
 		ft_putstr_fd(": too many arguments\n", 2);
-		update_exit_code(envp, 1);
+		return (update_exit_code(envp, 1));
 	}
 	else if (str[i] && check_int(str[i]))
 	{

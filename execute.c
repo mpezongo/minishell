@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:17:52 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/14 14:52:37 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/15 08:23:28 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	execute(t_envp *envp, t_parsing *parsing)
 	if (g_global.quitting)
 	{
 		g_global.exit_code = 1;
-		check_exit_code(envp);
+		update_exit_code(envp, 1);
 		g_global.exit_code = 0;
 		return ;
 	}

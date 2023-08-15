@@ -6,17 +6,18 @@
 /*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:12 by rel-fila          #+#    #+#             */
-/*   Updated: 2023/08/13 16:35:37 by rel-fila         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:56:49 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../minishell.h"
 
-void	export_error(char *str)
+void	export_error(char *str, t_envp *envp)
 {
 	ft_putstr_fd("minishell: export: `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
+	update_exit_code(envp, 1);
 }
 
 void	add_non_existed_node(char **name, char **content, t_envp *envp)
@@ -91,7 +92,7 @@ void	export_cmd(char **str, t_envp *envp)
 		if (!ft_strlen(name) || check(str[i], envp))
 		{
 			free_name_content(name, content);
-			export_error(str[i]);
+			export_error(str[i], envp);
 			i++;
 			continue ;
 		}

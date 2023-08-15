@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:10 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/14 14:52:37 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:27:41 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	sigint_handler(int sig)
 		close(STDIN_FILENO);
 		g_global.heredoc = 0;
 	}
-	else if (sig == 2 && g_global.heredoc == 0 && waitpid(-1, NULL, WNOHANG) != 0)
+	else if (sig == 2 && g_global.heredoc == 0 \
+	&& waitpid(-1, NULL, WNOHANG) != 0)
 	{
 		g_global.exit_code = 1;
 		write(1, "\n", 1);

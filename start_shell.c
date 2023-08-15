@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpezongo <mpezongo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rel-fila <rel-fila@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:54:13 by mpezongo          #+#    #+#             */
-/*   Updated: 2023/08/14 14:52:37 by mpezongo         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:24:57 by rel-fila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	start_shell(t_envp **envp, t_parsing **parsings)
 			printf("%s\n", EXIT_MSG);
 			exit(0);
 		}
-		update_exit_code(*envp, g_global.exit_code);
 		if (line[0])
 		{
 			if (!check_spaces(line))
